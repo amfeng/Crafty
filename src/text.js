@@ -52,6 +52,8 @@ Crafty.c("Text", {
 
                 style.color = this._textColor;
                 style.font = font;
+                style.height = "auto";
+
                 el.innerHTML = this._text;
             } else if (e.type === "canvas") {
                 var context = e.ctx;
