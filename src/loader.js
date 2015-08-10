@@ -321,6 +321,7 @@ Crafty.extend({
                         obj.addEventListener('canplaythrough', pro, false);
                 } else if (type === "audio") {
                   // don't do anything
+                  obj = {};
                 } else {
                     asset = (type === "sprites" ? asset : current);
                     fileUrl = getFilePath(type, asset);
