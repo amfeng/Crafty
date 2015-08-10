@@ -40,7 +40,7 @@ Crafty.extend({
      * ~~~
      * Crafty.paths({ audio: "custom/audio/path/", images: "custom/images/path/" });
      *
-     * Crafty.load({ 
+     * Crafty.load({
      *   "audio": {
      *     "ray": ['ray.mp3'] // This loads ray.mp3 from custom/audio/path/ray.mp3
      *   }
@@ -107,7 +107,7 @@ Crafty.extend({
      * ~~~
      * // add tif extension to list of supported image files
      * Crafty.image_whitelist.push("tif");
-     * 
+     *
      * var assets = {
      *     "sprites": {
      *         "sprite.tif": {   //set a tif sprite
@@ -148,22 +148,22 @@ Crafty.extend({
      * @param onProgress - Callback when an asset is loaded. Contains information about assets loaded
      * @param onError - Callback when an asset fails to load
      *
-     * Preloader for all assets. Takes a JSON formatted object (or JSON string) of files and adds them to the 
+     * Preloader for all assets. Takes a JSON formatted object (or JSON string) of files and adds them to the
      * `Crafty.assets` object, as well as setting sprites accordingly.
      *
      * Format must follow the pattern shown in the example below, but it's not required to pass all "audio",
      * "images" and "sprites" properties, only those you'll need. For example, if you don't need to preload
      * sprites, you can omit that property.
-     * 
+     *
      * By default, Crafty will assume all files are in the current path.  For changing these,
      * use the function `Crafty.paths`.
-     * 
+     *
      * Files with suffixes in `image_whitelist` (case insensitive) will be loaded.
-     * 
+     *
      * It's possible to pass the full file path(including protocol), instead of just the filename.ext, in case
      * you want some asset to be loaded from another domain.
      *
-     * If `Crafty.support.audio` is `true`, files with the following suffixes `mp3`, `wav`, `ogg` and 
+     * If `Crafty.support.audio` is `true`, files with the following suffixes `mp3`, `wav`, `ogg` and
      * `mp4` (case insensitive) can be loaded.
      *
      * The `onProgress` function will be passed on object with information about
@@ -187,8 +187,8 @@ Crafty.extend({
      *         "slash": "slash.wav"
      *     },
      *     "images": ["badguy.bmp", "goodguy.png"],
-     *     "sprites": { 
-     *         "animals.png": { 
+     *     "sprites": {
+     *         "animals.png": {
      *             "tile": 50,
      *             "tileh": 40,
      *             "map": { "ladybug": [0,0], "lazycat": [0,1], "ferociousdog": [0,2] }
@@ -203,7 +203,7 @@ Crafty.extend({
      *         }
      *     },
      * };
-     * 
+     *
      * Crafty.load(assetsObj, // preload assets
      *     function() { //when loaded
      *         Crafty.scene("main"); //go to main scene
@@ -225,9 +225,9 @@ Crafty.extend({
      * @see Crafty.removeAssets
      */
     load: function (data, oncomplete, onprogress, onerror) {
-      
+
         data = (typeof data === "string" ? JSON.parse(data) : data);
-      
+
         var j = 0,
             total = (data.audio ? Object.keys(data.audio).length : 0) +
               (data.images ? Object.keys(data.images).length : 0) +
@@ -319,6 +319,8 @@ Crafty.extend({
                     //addEventListener is supported on IE9 , Audio as well
                     if (obj && obj.addEventListener)
                         obj.addEventListener('canplaythrough', pro, false);
+                else if (type === "audio") {
+                  // don't do anything
                 } else {
                     asset = (type === "sprites" ? asset : current);
                     fileUrl = getFilePath(type, asset);
@@ -354,13 +356,13 @@ Crafty.extend({
      * @param data - Object JSON formatted (or JSON string), with assets to remove (accepts sounds, images and sprites)
      * Removes assets (audio, images, sprites - and related sprite components) in order to allow the browser
      * to free memory.
-     * 
+     *
      * Recieves a JSON fomatted object (or JSON string) containing 'audio', 'images' and/or 'sprites'
      * properties with assets to be deleted. Follows a similar format as Crafty.load 'data' argument. If
      * you pass the exact same object passed to Crafty.load, that will delete everything loaded that way.
      * For sprites, if you want to keep some specific component, just don't pass that component's name in
      * the sprite 'map'.
-     * 
+     *
      * Note that in order to remove the sprite components related to a given sprite, it's required to
      * pass the 'map' property of that sprite, and although its own properties's values (the properties refer
      * to sprite components) are not used in the removing process, omitting them will cause an error (since
@@ -387,25 +389,25 @@ Crafty.extend({
      *         }
      *     }
      * }
-     * 
+     *
      * Crafty.removeAssets(assetsToRemoveObj);
      * ~~~
      *
      * @see Crafty.load
      */
     removeAssets: function(data) {
-      
+
         data = (typeof data === "string" ? JSON.parse(data) : data);
-      
+
         var current, fileUrl, type, asset,
             paths = Crafty.paths(),
             getFilePath = function(type,f) {
                 return (f.search("://") === -1 ? (type == "audio" ? paths.audio + f : paths.images + f) : f);
             };
-      
+
         for (type in data) {
             for (asset in data[type]) {
-              
+
                 current = data[type][asset];
 
                 if (type === "audio") {
