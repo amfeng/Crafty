@@ -319,7 +319,7 @@ Crafty.extend({
                     //addEventListener is supported on IE9 , Audio as well
                     if (obj && obj.addEventListener)
                         obj.addEventListener('canplaythrough', pro, false);
-                else if (type === "audio") {
+                } else if (type === "audio") {
                   // don't do anything
                 } else {
                     asset = (type === "sprites" ? asset : current);
