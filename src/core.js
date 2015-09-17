@@ -759,6 +759,8 @@ Crafty.fn = Crafty.prototype = {
      * Unlike DOM events, Crafty events are exectued synchronously.
      */
     trigger: function (event) {
+        var data = Array.prototype.slice.call(arguments, 1);
+
         var h = handlers[event] || (handlers[event] = {});
         // (To learn how the handlers object works, see inline comment at Crafty.bind)
         if (this.length === 1) {
@@ -773,7 +775,7 @@ Crafty.fn = Crafty.prototype = {
                         i--;
                         l--;
                     } else {
-                        callbacks[i].call(this, data);
+                        callbacks[i].apply(this, data);
                     }
                 }
                 callbacks.depth--;
