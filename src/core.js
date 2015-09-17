@@ -429,7 +429,7 @@ Crafty.fn = Crafty.prototype = {
      * @param property - Property of the entity to modify
      * @returns Value - the value of the property
      * Use this method to get any property of the entity. You can also retrieve the property using `this.property`.
-     * 
+     *
      *
      * @example
      * ~~~
@@ -758,7 +758,7 @@ Crafty.fn = Crafty.prototype = {
      *
      * Unlike DOM events, Crafty events are exectued synchronously.
      */
-    trigger: function (event, data) {
+    trigger: function (event) {
         var h = handlers[event] || (handlers[event] = {});
         // (To learn how the handlers object works, see inline comment at Crafty.bind)
         if (this.length === 1) {
@@ -1278,7 +1278,7 @@ Crafty.extend({
                 // dt is determined by the mode
                 for (var i = 0; i < loops; i++) {
                     lastFrameTime = currentTime;
-                    
+
                     var frameData = {
                         frame: frame++,
                         dt: dt,
@@ -1401,7 +1401,7 @@ Crafty.extend({
      * Creates a component where the first argument is the ID and the second
      * is the object that will be inherited by entities.
      *
-     * Specifically, each time a component is added to an entity, the component properties are copied over to the entity. 
+     * Specifically, each time a component is added to an entity, the component properties are copied over to the entity.
      * * In the case of primitive datatypes (booleans, numbers, strings) the property is copied by value.
      * * In the case of complex datatypes (objects, arrays, functions) the property is copied by reference and will thus reference the components' original property.
      * * (See the two examples below for further explanation)
@@ -1463,7 +1463,8 @@ Crafty.extend({
      *
      * @see Crafty.bind
      */
-    trigger: function (event, data) {
+    trigger: function (event) {
+        var data = Array.prototype.slice.call(arguments, 1);
 
         // (To learn how the handlers object works, see inline comment at Crafty.bind)
         var hdl = handlers[event] || (handlers[event] = {}),
@@ -1494,7 +1495,7 @@ Crafty.extend({
                     i--;
                     l--;
                 } else
-                    callbacks[i].call(context, data);
+                    callbacks[i].apply(context, data);
             }
             callbacks.depth--;
         }
