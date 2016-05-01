@@ -308,6 +308,7 @@ module.exports = {
 
                 current = data[type][asset];
 
+                obj = undefined;
                 if (type === "audio") {
                     if (audSupport) {
                         if (typeof current === "object") {
@@ -344,6 +345,7 @@ module.exports = {
                         onImgLoad(obj, fileUrl);
                     }
                 }
+
                 if (obj)
                     obj.onerror = err;
                 else
