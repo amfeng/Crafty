@@ -308,25 +308,27 @@ module.exports = {
 
                 current = data[type][asset];
 
-                if (type === "audio" && audSupport) {
-                    if (typeof current === "object") {
-                        var files = [];
-                        for (var i in current) {
-                            fileUrl = getFilePath(type, current[i]);
-                            if (!isAsset(fileUrl) && isSupportedAudio(current[i]))
-                                files.push(fileUrl);
+                if (type === "audio") {
+                    if (audSupport) {
+                        if (typeof current === "object") {
+                            var files = [];
+                            for (var i in current) {
+                                fileUrl = getFilePath(type, current[i]);
+                                if (!isAsset(fileUrl) && isSupportedAudio(current[i]))
+                                    files.push(fileUrl);
+                            }
+                            obj = Crafty.audio.add(asset, files).obj;
                         }
-                        obj = Crafty.audio.add(asset, files).obj;
-                    }
-                    else if (typeof current === "string" && isSupportedAudio(current)) {
-                        fileUrl = getFilePath(type, current);
-                        if (!isAsset(fileUrl))
-                            obj = Crafty.audio.add(asset, fileUrl).obj;
-                    }
+                        else if (typeof current === "string" && isSupportedAudio(current)) {
+                            fileUrl = getFilePath(type, current);
+                            if (!isAsset(fileUrl))
+                                obj = Crafty.audio.add(asset, fileUrl).obj;
+                        }
 
-                    //addEventListener is supported on IE9 , Audio as well
-                    if (obj && obj.addEventListener)
-                        obj.addEventListener('canplaythrough', pro, false);
+                        //addEventListener is supported on IE9 , Audio as well
+                        if (obj && obj.addEventListener)
+                            obj.addEventListener('canplaythrough', pro, false);
+                    }
                 } else {
                     asset = (type === "sprites" ? asset : current);
                     fileUrl = getFilePath(type, asset);
