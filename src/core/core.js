@@ -772,7 +772,9 @@ Crafty.fn = Crafty.prototype = {
      *
      * Unlike DOM events, Crafty events are exectued synchronously.
      */
-    trigger: function (event, data) {
+    trigger: function (event) {
+        var data = Array.prototype.slice.call(arguments, 1);
+
         //  To learn how the event system functions, see the comments for Crafty._callbackMethods
         if (this.length === 1) {
             //find the handlers assigned to the entity
@@ -1081,7 +1083,7 @@ Crafty._callbackMethods = {
                     }
                 }
             } else {
-                callbacks[i].call(this, data);
+                callbacks[i].apply(this, data);
             }
         }
         callbacks.depth--;
@@ -1672,7 +1674,8 @@ Crafty.extend({
      *
      * @see Crafty.bind
      */
-    trigger: function (event, data) {
+    trigger: function (event) {
+        var data = Array.prototype.slice.call(arguments, 1);
 
         //  To learn how the event system functions, see the comments for Crafty._callbackMethods
         var hdl = handlers[event] || (handlers[event] = {}),
