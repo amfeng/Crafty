@@ -156,9 +156,12 @@ module.exports = {
             oldScene: oldScene,
             newScene: name
         });
-           
+
         if (this._scenes.hasOwnProperty(name)) {
             this._scenes[name].initialize.call(this, data);
+            Crafty.trigger("SceneEnter", {
+              scene: name
+            });
         } else {
             Crafty.error('The scene "' + name + '" does not exist');
         }
